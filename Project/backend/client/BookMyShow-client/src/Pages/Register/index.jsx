@@ -1,13 +1,29 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { Link } from "react-router-dom";
+import { RegisterUser } from '../../api/user'; // Adjust the import path as necessary
 
 const Register = () => {
+  const onFinish= async(values)=>{
+    try{
+      const response = await RegisterUser(values);
+      if(response.success) {
+        alert("Registration successful!");
+      } else {
+        alert("Registration failed: " + response.message);
+      }
+      console.log("Registration successful:", response);
+    }
+    catch(error) {
+      console.error("Registration error:", error);
+      alert("An error occurred during registration. Please try again.");
+  }
+  };
   return (
     <main className="App-header">
           <h1>Register to BookMyShow</h1>
           <section className="mw-500 text-center px-3">
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={onFinish}>
               <Form.Item
                 label="Name"
                 name="name"

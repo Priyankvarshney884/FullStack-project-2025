@@ -40,17 +40,17 @@ const loginUser = async (req, res) => {
         }
 
         // Check password
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) {
+        if (user.password !== password) {
             return res.status(401).json({ message: "Invalid credentials",
-                success: false
-             });
+            success: false
+            });
         }
 
         return res.status(200).json({ message: "Login successful",
             success: true
          });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ message: "Internal server error",
             success: false
         });

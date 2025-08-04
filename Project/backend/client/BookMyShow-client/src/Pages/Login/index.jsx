@@ -1,13 +1,29 @@
 import React from "react";
 import { Button, Form, Input } from "antd";
 import { Link } from "react-router-dom";
+import { LoginUser } from '../../api/user'; // Adjust the import path as necessary
 
 function Login() {
+   const onFinish= async(values)=>{
+      try{
+        const response = await LoginUser(values);
+        if(response.success) {
+          alert("Login successful!");
+        } else {
+          alert("Login failed: " + response.message);
+        }
+        console.log("Login successful:", response);
+      }
+      catch(error) {
+        console.error("Login error:", error);
+        alert("An error occurred during Login. Please try again.");
+    }
+    };
   return (
     <main className="App-header">
       <h1>Login to BookMyShow</h1>
       <section className="mw-500 text-center px-3">
-        <Form layout="vertical">
+        <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
             label="Email"
             name="email"
